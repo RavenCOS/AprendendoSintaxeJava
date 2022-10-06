@@ -5,6 +5,7 @@ import java.util.Scanner;
 public class ControleRemoto {
     static SmartTv smartTv = new SmartTv();
     static Scanner teclado = new Scanner(System.in);
+
     public static void main(String[] args) {
 
 
@@ -66,22 +67,30 @@ public class ControleRemoto {
         do {
             System.out.println("Volume Atual: " + smartTv.volume);
             System.out.println("""
-                                Você quer aumentar ou diminuir o volume?
-                                [ 1 ] Aumentar
-                                [ 2 ] Diminuir
-                                [ 0 ] Voltar""");
+                    Você quer aumentar ou diminuir o volume?
+                    [ 1 ] Aumentar
+                    [ 2 ] Diminuir
+                    [ 0 ] Voltar""");
             botao = teclado.nextInt();
             if (botao == 1) {
-                smartTv.aumentarVolume();
+                if (smartTv.volume == 100) {
+                    System.out.println("Volume está no Máximo!!!");
+                } else {
+                    smartTv.aumentarVolume();
+                }
             } else if (botao == 2) {
-                smartTv.diminuirVolume();
+                if (smartTv.volume == 0) {
+                    System.out.println("Volume está no Minimo!!!");
+                } else {
+                    smartTv.diminuirVolume();
+                }
             } else {
                 System.out.println("erro, botão invalido");
             }
         } while (botao != 0);
     }
 
-    public static void mudarCanal(){
+    public static void mudarCanal() {
         int botao;
         do {
             System.out.println("Canal Atual: " + smartTv.canal);
@@ -93,13 +102,26 @@ public class ControleRemoto {
                     [ 0 ] Voltar""");
             botao = teclado.nextInt();
             if (botao == 1) {
-                smartTv.subirCanal();
+                if (smartTv.canal == 50) {
+                    smartTv.canal = 1;
+                }
+                else {
+                    smartTv.subirCanal();
+                }
             } else if (botao == 2) {
-                smartTv.descerCanal();
+                if (smartTv.canal == 1) {
+                    smartTv.canal = 50;
+                } else {
+                    smartTv.descerCanal();
+                }
             } else if (botao == 3) {
                 System.out.println("Para qual canal? ");
                 int canal = teclado.nextInt();
-                smartTv.pularCanal(canal);
+                if (canal < 1 || canal > 50) {
+                    System.out.println("Canal não encontrado");
+                } else {
+                    smartTv.pularCanal(canal);
+                }
             } else System.out.println("Botão Invalido");
         } while (botao != 0);
     }
